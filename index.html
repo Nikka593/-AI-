@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>セブン‐イレブンはなぜ生成AIでデータを「全員が使える資産」にできたのか？ - NeoCyber Tech Summary</title>
+  <style>
+    :root {
+      /* コアカラーシステム */
+      --color-bg-primary: #0a0e17;
+      --color-bg-secondary: #10141e;
+      --color-bg-tertiary: #161c2b;
+      --color-text-primary: #e2e8f0;
+      --color-text-secondary: #94a3b8;
+      --color-text-muted: #64748b;
+      
+      /* アクセントカラー - サイバーパンク風 */
+      --color-accent-neon: #00f7ff;
+      --color-accent-electric: #2563eb;
+      --color-accent-cyber: #7c3aed;
+      --color-accent-tech: #f472b6;
+      --color-accent-highlight: #22d3ee;
+      
+      /* セブンイレブンカラー */
+      --seven-green: #009e3a;
+      --seven-orange: #ff6600;
+
+      /* グラスモーフィズム効果 */
+      --glass-blur: blur(16px);
+      --glass-opacity: 0.7;
+      --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+      
+      /* ネオンエフェクト */
+      --neon-glow: 0 0 10px var(--color-accent-neon), 0 0 20px rgba(0, 247, 255, 0.3);
+      --text-glow: 0 0 2px rgba(56, 189, 248, 0.7);
+    }
+
+    /* タイポグラフィ */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background-color: var(--color-bg-primary);
+      color: var(--color-text-primary);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(0, 247, 255, 0.03) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(124, 58, 237, 0.03) 0%, transparent 20%),
+        linear-gradient(rgba(10, 14, 23, 0.97), rgba(10, 14, 23, 0.97)),
+        repeating-linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0.03) 0px,
+          rgba(255, 255, 255, 0.03) 1px,
+          transparent 1px,
+          transparent 40px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.03) 0px,
+          rgba(255, 255, 255, 0.03) 1px,
+          transparent 1px,
+          transparent 40px
+        );
+    }
+
+    /* ドキュメント構造 */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* ヘッダーセクション */
+    .header {
+      position: relative;
+      padding: 3.5rem 2.5rem 2.5rem;
+      background: linear-gradient(135deg, var(--color-bg-secondary), var(--color-bg-tertiary));
+      border-radius: 16px;
+      margin-bottom: 2.5rem;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--seven-green), var(--color-accent-neon), var(--seven-orange));
+    }
+
+    .header::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(
+        circle at center,
+        rgba(0, 247, 255, 0.15) 0%,
+        transparent 70%
+      );
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .header-container {
+      position: relative;
+      z-index: 2;
+    }
+
+    .document-id {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--color-accent-neon);
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+    }
+
+    .title {
+      font-size: 2.4rem;
+      font-weight: 700;
+      margin: 0 0 1.2rem;
+      background: linear-gradient(90deg, var(--color-text-primary), var(--color-accent-neon), var(--seven-green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+      text-shadow: 0 0 30px rgba(0, 247, 255, 0.1);
+      max-width: 95%;
+    }
+
+    .subtitle {
+      font-size: 1.25rem;
+      color: var(--color-text-secondary);
+      margin-bottom: 2rem;
+      max-width: 700px;
+    }
+
+    .meta-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 1.5rem;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .meta-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--color-text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .meta-value {
+      font-size: 1rem;
+      color: var(--color-text-primary);
+    }
+
+    /* セクション共通 */
+    .section {
+      margin-bottom: 4rem;
+      position: relative;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 2rem;
+      gap: 1rem;
+      position: relative;
+    }
+    
+    .section-header::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 100px;
+      height: 1px;
+      background: var(--color-accent-neon);
+      opacity: 0.7;
+      box-shadow: var(--neon-glow);
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .section-divider {
+      flex-grow: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--color-accent-neon), transparent);
+    }
+
+    /* 概要セクション */
+    .overview-container {
+      display: grid;
+      grid-template-columns: 3fr 1fr;
+      gap: 2rem;
+    }
+
+    .overview-content {
+      background: var(--color-bg-tertiary);
+      padding: 2.5rem;
+      border-radius: 14px;
+      border: var(--glass-border);
+      backdrop-filter: var(--glass-blur);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .overview-content::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle at center, rgba(0, 158, 58, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .metrics-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .metric-card {
+      background: rgba(16, 20, 30, 0.7);
+      border-radius: 10px;
+      padding: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      backdrop-filter: var(--glass-blur);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .metric-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--color-accent-neon), transparent);
+      opacity: 0.6;
+    }
+
+    .metric-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+      border-color: rgba(0, 247, 255, 0.2);
+    }
+
+    .metric-title {
+      font-size: 0.875rem;
+      color: var(--color-text-secondary);
+      margin-bottom: 0.5rem;
+    }
+
+    .metric-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--color-accent-neon);
+      text-shadow: var(--text-glow);
+    }
+
+    .metric-label {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+    }
+
+    /* タグシステムの強化 */
+    .tags-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .tag {
+      font-size: 0.75rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 20px;
+      background: rgba(124, 58, 237, 0.15);
+      color: var(--color-accent-neon);
+      border: 1px solid rgba(124, 58, 237, 0.3);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .tag::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(0, 247, 255, 0.2),
+        transparent
+      );
+      transition: left 0.7s ease;
+    }
+    
+    .tag:hover {
+      background: rgba(124, 58, 237, 0.25);
+      border-color: var(--color-accent-neon);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2), 0 0 5px rgba(0, 247, 255, 0.3);
+    }
+    
+    .tag:hover::before {
+      left: 100%;
+    }
+
+    /* キーポイントセクション */
+    .key-points-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .key-point-card {
+      position: relative;
+      background: var(--color-bg-tertiary);
+      border-radius: 14px;
+      padding: 2.2rem;
+      border: var(--glass-border);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      backdrop-filter: var(--glass-blur);
+    }
+
+    .key-point-card:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--color-accent-cyber), transparent);
+    }
+
+    .key-point-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .key-point-number {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875rem;
+      color: var(--color-accent-neon);
+      background: rgba(0, 247, 255, 0.1);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 247, 255, 0.2);
+    }
+
+    .key-point-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--color-text-primary);
+    }
+
+    .key-point-content {
+      font-size: 1rem;
+      color: var(--color-text-secondary);
+    }
+
+    .key-point-highlight {
+      color: var(--color-accent-highlight);
+      font-weight: 500;
+    }
+
+    /* 技術詳細セクション */
+    .tech-details-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .architecture-diagram {
+      background: var(--color-bg-tertiary);
+      border-radius: 12px;
+      padding: 2rem;
+      border: var(--glass-border);
+    }
+
+    .architecture-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: var(--color-text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .architecture-title::before {
+      content: "//";
+      color: var(--color-accent-neon);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .architecture-card {
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .tech-item {
+      background: rgba(16, 20, 30, 0.7);
+      border-radius: 8px;
+      padding: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .tech-item:hover {
+      transform: translateY(-2px);
+      border-color: rgba(0, 247, 255, 0.2);
+    }
+
+    .tech-name {
+      font-weight: 600;
+      color: var(--color-accent-neon);
+      font-size: 0.875rem;
+    }
+
+    .tech-desc {
+      font-size: 0.75rem;
+      color: var(--color-text-secondary);
+    }
+
+    /* フッター */
+    .footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 2rem;
+      margin-top: 3rem;
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .footer-left {
+      max-width: 500px;
+    }
+
+    .footer-right {
+      text-align: right;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+    }
+
+    .footer-logo {
+      color: var(--color-accent-neon);
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+    }
+
+    /* データビジュアライゼーション */
+    .timeline {
+      position: relative;
+      padding-left: 2.5rem;
+      margin: 2.5rem 0;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 10px;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--color-accent-neon), rgba(0, 247, 255, 0.1));
+      border-radius: 3px;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2.5rem;
+      padding-bottom: 0.5rem;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -2.5rem;
+      top: 0.3rem;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--color-bg-tertiary);
+      border: 3px solid var(--color-accent-neon);
+      box-shadow: var(--neon-glow), 0 0 0 5px rgba(0, 247, 255, 0.1);
+      z-index: 2;
+    }
+
+    .timeline-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-accent-neon);
+      margin-bottom: 0.5rem;
+      display: block;
+      letter-spacing: 0.5px;
+      text-shadow: var(--text-glow);
+    }
+
+    .timeline-title {
+      font-weight: 600;
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+      color: var(--color-text-primary);
+    }
+
+    .timeline-content {
+      font-size: 1rem;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      padding-right: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .ai-platform-diagram {
+      width: 100%;
+      height: auto;
+      min-height: 380px;
+      background: var(--color-bg-tertiary);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      position: relative;
+      overflow: visible;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1.5rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .platform-box {
+      position: relative;
+      border: 1px solid rgba(0, 247, 255, 0.3);
+      border-radius: 8px;
+      padding: 1.5rem;
+      background: rgba(16, 20, 30, 0.7);
+      transition: all 0.3s ease;
+      overflow: visible;
+      height: auto;
+      min-height: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .platform-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--color-accent-neon);
+      margin-bottom: 0.75rem;
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      background: rgba(0, 247, 255, 0.1);
+      border-radius: 4px;
+    }
+
+    .platform-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .platform-item {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      background: rgba(124, 58, 237, 0.1);
+      border-radius: 4px;
+      color: var(--color-text-secondary);
+    }
+
+    .platform-highlight {
+      color: var(--color-accent-tech);
+    }
+
+    .platform-connectors {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .platform-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      width: 100%;
+      flex-wrap: wrap;
+    }
+    
+    @media (max-width: 768px) {
+      .platform-row {
+        flex-direction: column;
+      }
+    }
+
+    .progress-bar {
+      height: 6px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 3px;
+      margin: 1rem 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--color-accent-cyber), var(--color-accent-neon));
+      border-radius: 3px;
+      position: relative;
+      width: var(--fill-width, 50%);
+    }
+
+    .progress-fill::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 20px;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 250px;
+      background: linear-gradient(to top, var(--color-bg-primary), transparent);
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    /* スクロールアニメーション用のヘルパークラス */
+    .scroll-fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    
+    .scroll-fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* スクロールトリガージャバスクリプト */
+    </style>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // スクロールアニメーション
+        const scrollElements = document.querySelectorAll('.section, .key-point-card, .platform-box, .tech-item');
+        
+        const elementInView = (el, dividend = 1) => {
+          const elementTop = el.getBoundingClientRect().top;
+          return (
+            elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend
+          );
+        };
+
+        const displayScrollElement = (element) => {
+          element.classList.add('visible');
+        };
+
+        const hideScrollElement = (element) => {
+          element.classList.remove('visible');
+        };
+
+        const handleScrollAnimation = () => {
+          scrollElements.forEach((el) => {
+            if (elementInView(el, 1.25)) {
+              displayScrollElement(el);
+            } else {
+              hideScrollElement(el);
+            }
+          });
+        };
+        
+        // 初期設定: すべての要素をfade-inクラスに追加
+        scrollElements.forEach((el) => {
+          el.classList.add('scroll-fade-in');
+        });
+        
+        // スクロールイベントの設定
+        window.addEventListener('scroll', () => {
+          handleScrollAnimation();
+        });
+        
+        // 初回実行
+        handleScrollAnimation();
+        
+        // スクロールインジケーターのクリックイベント
+        const scrollIndicator = document.querySelector('.scroll-indicator');
+        if (scrollIndicator) {
+          scrollIndicator.addEventListener('click', () => {
+            window.scrollBy({
+              top: window.innerHeight / 2,
+              behavior: 'smooth'
+            });
+          });
+        }
+        
+        // スクロール位置に応じたスクロールインジケーターの表示制御
+        window.addEventListener('scroll', () => {
+          if (scrollIndicator) {
+            const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            
+            if (scrollPosition > 300 && scrollPosition < maxScroll - 200) {
+              scrollIndicator.style.opacity = '1';
+            } else {
+              scrollIndicator.style.opacity = '0';
+            }
+          }
+        });
+      });
+    </script>
+  </head>
+<body>
+  <!-- デコレーション要素 -->
+  <div class="cyber-grid"></div>
+  <div class="digital-noise"></div>
+  <div class="scanline"></div>
+  <div class="data-stream"></div>
+  <div class="scroll-indicator"></div>
+  <div class="floating-deco floating-circle-1"></div>
+  <div class="floating-deco floating-circle-2"></div>
+  <div class="floating-deco floating-square"></div>
+  
+  <div class="container">
+    <!-- ヘッダーセクション -->
+    <header class="header">
+      <div class="header-container">
+        <div class="document-id">NTS² // DOC-SEJ-AI-2025-03-15</div>
+        <h1 class="title">セブン‐イレブンはなぜ生成AIでデータを「全員が使える資産」にできたのか？</h1>
+        <p class="subtitle">データドリブン経営のDNAを持つコンビニ最大手が、Google Cloud上の生成AI基盤でデータの民主化を実現した最先端事例</p>
+        <div class="meta-info">
+          <div class="meta-item">
+            <span class="meta-label">ソース</span>
+            <span class="meta-value">マイナビニュース</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">公開日</span>
+            <span class="meta-value">2025年3月14日</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">著者</span>
+            <span class="meta-value">今林敏子</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">カテゴリ</span>
+            <span class="meta-value">企業AI導入事例</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 概要セクション -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">OVERVIEW</h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="overview-container">
+        <div class="overview-content">
+          <p>セブン‐イレブン・ジャパンはGoogle Cloud上に生成AI基盤「セブン-イレブン AIライブラリー」を構築し、全社員による活用を進めている。創業以来のデータドリブン文化を持つ同社だが、高度なデータ利活用基盤「セブンセントラル」を構築していても、データの民主化には至らなかった。生成AIの登場により、専門知識がなくてもデータを活用できる環境を実現し、「データの民主化」に成功しつつある。</p>
+          <p>西村出氏（セブン＆アイ・ホールディングス／セブン‐イレブン・ジャパン 執行役員 最高情報責任者 (CIO) 兼 グループ DX 本部長）は、「生成AIの登場によってデータ活用のハードルが劇的に下がる」と指摘。同社は商品開発、リスク分析レポート生成、IR資料の要約・比較など、幅広い業務で生成AIを活用している。</p>
+          <div class="tags-container">
+            <span class="tag">生成AI</span>
+            <span class="tag">Google Cloud</span>
+            <span class="tag">データ民主化</span>
+            <span class="tag">セブン‐イレブン</span>
+            <span class="tag">Gemini</span>
+            <span class="tag">Claude</span>
+            <span class="tag">ユースケース</span>
+          </div>
+        </div>
+        <div class="metrics-container">
+          <div class="metric-card">
+            <div class="metric-title">店舗数</div>
+            <div class="metric-value">21,000+</div>
+            <div class="metric-label">全国コンビニエンスストア</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">データ処理量</div>
+            <div class="metric-value">1.2PB</div>
+            <div class="metric-label">セブンセントラルが管理</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">日次処理レコード</div>
+            <div class="metric-value">52億+</div>
+            <div class="metric-label">1日あたりの処理量</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">データ同期速度</div>
+            <div class="metric-value">最速1分</div>
+            <div class="metric-label">従来は翌朝まで要していた</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- キーポイントセクション -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">KEY POINTS</h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="key-points-grid">
+        <div class="key-point-card">
+          <div class="cyber-corner cyber-corner-tl"></div>
+          <div class="cyber-corner cyber-corner-tr"></div>
+          <div class="cyber-corner cyber-corner-bl"></div>
+          <div class="cyber-corner cyber-corner-br"></div>
+          <div class="key-point-number">01</div>
+          <h3 class="key-point-title">データドリブン経営のDNAと課題</h3>
+          <p class="key-point-content">
+            セブン‐イレブンは創業以来、<span class="key-point-highlight">データを活用する文化</span>が根付いており、翌朝には売上の詳細が確認できるシステムを構築。しかし、<span class="key-point-highlight">データ利活用基盤「セブンセントラル」</span>を整備しても、データを加工・分析できる社員は限られ、<span class="key-point-highlight">データの民主化が実現できていなかった</span>。
+          </p>
+        </div>
+        <div class="key-point-card">
+          <div class="cyber-corner cyber-corner-tl"></div>
+          <div class="cyber-corner cyber-corner-tr"></div>
+          <div class="cyber-corner cyber-corner-bl"></div>
+          <div class="cyber-corner cyber-corner-br"></div>
+          <div class="key-point-number">02</div>
+          <h3 class="key-point-title">生成AI基盤の構築</h3>
+          <p class="key-point-content">
+            Google Cloud上に<span class="key-point-highlight">「セブン-イレブン AIライブラリー」</span>を構築。様々な生成AIモデル（Gemini、Claude 3.7 Sonnet、DALL-E 3など）を統合し、<span class="key-point-highlight">RAG</span>を活用して自社データ、SNSデータ、GISデータなどと連携。専門知識がなくてもデータ活用を可能にする<span class="key-point-highlight">セキュアな環境</span>を実現。
+          </p>
+        </div>
+        <div class="key-point-card">
+          <div class="cyber-corner cyber-corner-tl"></div>
+          <div class="cyber-corner cyber-corner-tr"></div>
+          <div class="cyber-corner cyber-corner-bl"></div>
+          <div class="cyber-corner cyber-corner-br"></div>
+          <div class="key-point-number">03</div>
+          <h3 class="key-point-title">具体的な業務活用事例</h3>
+          <p class="key-point-content">
+            <span class="key-point-highlight">商品開発</span>：SNSの声を分析した改善提案、商品化以前のイメージ自動生成、加盟店への正確な情報伝達。<br>
+            <span class="key-point-highlight">リスク分析</span>：複雑なデータからのレポート自動生成。<br>
+            <span class="key-point-highlight">IR資料分析</span>：92ページの英語年次報告書を20秒でサマリー作成。
+          </p>
+        </div>
+        <div class="key-point-card">
+          <div class="cyber-corner cyber-corner-tl"></div>
+          <div class="cyber-corner cyber-corner-tr"></div>
+          <div class="cyber-corner cyber-corner-bl"></div>
+          <div class="cyber-corner cyber-corner-br"></div>
+          <div class="key-point-number">04</div>
+          <h3 class="key-point-title">企業での生成AI活用の課題と解決策</h3>
+          <p class="key-point-content">
+            生成AIを業務で活用する際の主な課題：<span class="key-point-highlight">UIと操作性</span>、<span class="key-point-highlight">アウトプットの信頼性</span>、<span class="key-point-highlight">LLMごとの特徴</span>、<span class="key-point-highlight">最新プロンプトの提供</span>。これらを解決するため、目的を絞ったUI設計やプロンプトエンジニアリングの限界に挑戦。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 技術詳細セクション -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">TECHNICAL DETAILS</h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="tech-details-container">
+        <div class="architecture-card">
+          <h3 class="architecture-title">// セブンセントラル - データ利活用基盤</h3>
+          <p>全国2万1000店舗から収集される膨大なデータを管理するプラットフォーム。52億レコード以上を日次処理し、1.2ペタバイトのデータを保持。</p>
+          
+          <div class="ai-platform-diagram">
+            <div class="platform-row">
+              <div class="platform-box" style="flex: 1;">
+                <div class="platform-title">データ収集</div>
+                <p>店舗システム、基幹システム、Salesforceなどから最速1分で連携</p>
+                <div class="platform-items">
+                  <span class="platform-item">店舗実績データ</span>
+                  <span class="platform-item">マスタデータ</span>
+                  <span class="platform-item">顧客情報</span>
+                </div>
+              </div>
+            </div>
+            <div class="platform-row">
+              <div class="platform-box" style="flex: 1;">
+                <div class="platform-title">データ処理・保存</div>
+                <p>Google Cloud上のBigQuery、Cloud Spannerなどで処理</p>
+                <div class="platform-items">
+                  <span class="platform-item">BigQuery</span>
+                  <span class="platform-item">Cloud Spanner</span>
+                  <span class="platform-item">Cloud Storage</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="--fill-width: 80%"></div>
+                </div>
+                <small style="display: block; margin-top: 8px; color: var(--color-text-secondary);">2020年9月より稼働 | 1.2ペタバイト（国会図書館の蔵書データ量に相当）</small>
+              </div>
+            </div>
+            <div class="platform-row">
+              <div class="platform-box" style="flex: 1;">
+                <div class="platform-title">データ活用</div>
+                <p>BIツール、アプリを通じて全社からアクセス可能</p>
+                <div class="platform-items">
+                  <span class="platform-item">従業員</span>
+                  <span class="platform-item">加盟店</span>
+                  <span class="platform-item">取引先</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="architecture-card">
+          <h3 class="architecture-title">// セブン-イレブン AIライブラリー - 生成AI基盤</h3>
+          <p>急速に進化・台頭する生成AIを適切に評価し使い分けながら、社内業務に合わせた知見を貯めるセキュアな基盤。</p>
+          
+          <div class="ai-platform-diagram">
+            <div class="platform-row">
+              <div class="platform-box" style="flex: 2;">
+                <div class="platform-title">様々な生成AI</div>
+                <p>目的に応じた最適なAIモデルを選択可能</p>
+                <div class="platform-items">
+                  <span class="platform-item platform-highlight">Gemini 2.0 Pro</span>
+                  <span class="platform-item platform-highlight">Claude 3.7 Sonnet</span>
+                  <span class="platform-item">OpenAI GPT-4.5</span>
+                  <span class="platform-item">DALL-E 3</span>
+                  <span class="platform-item">Flash Thinking</span>
+                </div>
+              </div>
+              <div class="platform-box" style="flex: 1;">
+                <div class="platform-title">データ連携</div>
+                <p>社内外の多様なデータソースと接続</p>
+                <div class="platform-items">
+                  <span class="platform-item">セブンセントラル</span>
+                  <span class="platform-item">SNSデータ</span>
+                  <span class="platform-item">GIS・商圏分析</span>
+                </div>
+              </div>
+            </div>
+            <div class="platform-row">
+              <div class="platform-box" style="flex: 1;">
+                <div class="platform-title">AIライブラリー機能</div>
+                <p>生成AIを業務活用するための多様な機能</p>
+                <div class="platform-items">
+                  <span class="platform-item">モデル切替・履歴</span>
+                  <span class="platform-item">プロンプト</span>
+                  <span class="platform-item">テンプレート</span>
+                  <span class="platform-item">キュービング</span>
+                  <span class="platform-item">利用量制限</span>
+                </div>
+              </div>
+            </div>
+            <div class="platform-row">
+              <div class="platform-box" style="flex: 1;">
+                <div class="platform-title">インターフェース・接続システム</div>
+                <p>様々なツールとの連携により業務効率化</p>
+                <div class="platform-items">
+                  <span class="platform-item">Chat-AI</span>
+                  <span class="platform-item">Microsoft 365</span>
+                  <span class="platform-item">業務システム</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="architecture-card">
+          <h3 class="architecture-title">// 生成AI活用への取り組み</h3>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-date">2023年11月</div>
+              <div class="timeline-title">初期活用開始</div>
+              <div class="timeline-content">役職者およびシステム本部員による生成AI活用開始。ハルシネーションよりも使い切ることを優先し、実務での実験を重視</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">2024年</div>
+              <div class="timeline-title">全社展開</div>
+              <div class="timeline-content">他本部での利用拡大、UIの工夫や設定の最適化を実施。コマンドプロンプト的UIからスマホアプリ的UIまで多様なインターフェースを開発</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">2025年3月</div>
+              <div class="timeline-title">活用成果の公表</div>
+              <div class="timeline-content">Google Cloud AI Agent Summit '25 Springでの成果発表。商品開発、リスク分析、IR資料分析などの具体的活用事例を共有</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="architecture-card">
+          <h3 class="architecture-title">// 生成AI活用の主要課題と対策</h3>
+          <div class="tech-grid">
+            <div class="tech-item">
+              <div class="tech-name">UIと操作性</div>
+              <div class="tech-desc">コマンドプロンプト風のUIからスマホアプリ的なUIまで、目的に応じた使いやすいインターフェースの提供</div>
+            </div>
+            <div class="tech-item">
+              <div class="tech-name">アウトプットの信頼性</div>
+              <div class="tech-desc">根拠の妥当性、信頼性、論理構成、一貫性などを評価する仕組みを導入</div>
+            </div>
+            <div class="tech-item">
+              <div class="tech-name">LLMごとの特徴</div>
+              <div class="tech-desc">人ごとの業務、役割に合うLLMを選択できる環境構築</div>
+            </div>
+            <div class="tech-item">
+              <div class="tech-name">最新プロンプトの提供</div>
+              <div class="tech-desc">学術論文、技術記事などを参照し、業務要望に応えるプロンプトを継続的に開発</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- フッター -->
+    <footer class="footer">
+      <div class="footer-left">
+        <div class="footer-logo">NTS² // NEOCYBER TECH SUMMARY SYSTEM</div>
+        <p>本要約は、マイナビニュースの記事「セブン‐イレブンの生成AI活用、乗り越えた課題や成果を得ている用途とは」および関連資料に基づき生成されています。原文の詳細については元の記事をご参照ください。</p>
+      </div>
+      <div class="footer-right">
+        <div>GENERATED: 2025-03-15 12:42:39</div>
+        <div>FORMAT: NTS² v2.3.1</div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
